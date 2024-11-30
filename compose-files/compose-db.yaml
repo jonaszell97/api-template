@@ -1,0 +1,47 @@
+services:
+  template-db-admin:
+    image: dpage/pgadmin4:8.8
+    container_name: template-db-admin
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - SCRIPT_NAME=/admin
+    volumes:
+      - vol-template-db-admin:/var/lib/pgadmin
+    depends_on:
+      - template-db
+    networks:
+      - template
+    expose:
+      - 9876
+    ports:
+      - "9876:80"
+  
+  template-db:
+    image: postgres:15-alpine
+    container_name: template-db
+    restart: always
+    volumes:
+      - vol-template-db:/var/lib/postgresql/data/
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - template
+    ports:
+      - "5432:5432"
+
+volumes:
+  vol-template-db:
+    name: template-api_vol-template-db
+  vol-template-db-admin:
+    name: template-api_vol-template-db-admin
+
+networks:
+  template:
+    name: template-network
+    external: false

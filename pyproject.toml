@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "fastapi-template"
+version = "0.1.0"
+description = "Template for FastAPI projects with async SQLModel and Alembic"
+authors = ["Jonas Zell <jonas@jonaszell.dev>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.5"
+uvicorn = {extras = ["standard"], version = "^0.32.1"}
+sqlmodel = "^0.0.22"
+alembic = "^1.14.0"
+fastapi-pagination = "^0.12.32"
+asyncpg = "^0.30.0"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.3"
+pytest-asyncio = "^0.24.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = "project"
+asyncio_mode = "auto"
+
+[tool.black]
+line-length = 100

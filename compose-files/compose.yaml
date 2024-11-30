@@ -1,0 +1,18 @@
+services:
+  omniai-mind:
+    restart: always
+    build:
+      context: ..
+      args:
+        - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@onesolar-db:5432/${POSTGRES_DB}
+    image: jonaszell/omniai-mind
+    container_name: omniai-mind
+    depends_on:
+      - omniai-db
+    networks:
+      - omniai
+
+networks:
+  omniai:
+    name: omniai-network
+    external: true
